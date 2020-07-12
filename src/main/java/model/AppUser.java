@@ -26,82 +26,82 @@ public class AppUser {
     @Column(name = "date_of_registration")
     private Date dateOfRegistration;
 
-    @ManyToMany(mappedBy = "followByUser")
+    @ManyToMany(mappedBy = "followedByUser")
     private Set<AppUser> followers = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "follower_followed",
             joinColumns = {@JoinColumn(name = "follower_id")},
-            inverseJoinColumns = {@JoinColumn(name="followed_id")})
-private Set<AppUser> followedByUser = new HashSet<>();
+            inverseJoinColumns = {@JoinColumn(name = "followed_id")})
+    private Set<AppUser> followedByUser = new HashSet<>();
 
 
-public AppUser(){
-        }
+    public AppUser() {
+    }
 
-public Long getId(){
+    public Long getId() {
         return id;
-        }
+    }
 
-public void setId(Long id){
-        this.id=id;
-        }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-public String getLogin(){
+    public String getLogin() {
         return login;
-        }
+    }
 
-public void setLogin(String login){
-        this.login=login;
-        }
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-public String getName(){
+    public String getName() {
         return name;
-        }
+    }
 
-public void setName(String name){
-        this.name=name;
-        }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-public String getLastName(){
+    public String getLastName() {
         return lastName;
-        }
+    }
 
-public void setLastName(String lastName){
-        this.lastName=lastName;
-        }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-public String getPassword(){
+    public String getPassword() {
         return password;
-        }
+    }
 
-public void setPassword(String password){
-        this.password=password;
-        }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-public String getEmail(){
+    public String getEmail() {
         return email;
-        }
+    }
 
-public void setEmail(String email){
-        this.email=email;
-        }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-public Date getDateOfRegistration(){
+    public Date getDateOfRegistration() {
         return dateOfRegistration;
-        }
+    }
 
-public void setDateOfRegistration(Date dateOfRegistration){
-        this.dateOfRegistration=dateOfRegistration;
-        }
+    public void setDateOfRegistration(Date dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
+    }
 
-public Set<AppUser> getFollowers(){
+    public Set<AppUser> getFollowers() {
         return followers;
-        }
+    }
 
-public void setFollowers(Set<AppUser> followers){
-        this.followers=followers;
-        }
+    public void setFollowers(Set<AppUser> followers) {
+        this.followers = followers;
+    }
 
     public Set<AppUser> getFollowedByUser() {
         return followedByUser;
@@ -109,5 +109,35 @@ public void setFollowers(Set<AppUser> followers){
 
     public void setFollowedByUser(Set<AppUser> followedByUser) {
         this.followedByUser = followedByUser;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AppUser user = (AppUser) o;
+
+        return id != null ? id.equals(user.id) : user.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "AppUser{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", dateOfRegistration=" + dateOfRegistration +
+                ", followers=" + followers +
+                ", followedByUser=" + followedByUser +
+                '}';
     }
 }

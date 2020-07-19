@@ -21,6 +21,8 @@ public class LoginServlet extends HttpServlet {
 
     private UserManagementService service;
 
+
+
     @Override
     public void init() throws ServletException {
         service = new UserManagementServiceImp();
@@ -74,6 +76,8 @@ public class LoginServlet extends HttpServlet {
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
             return;
         }
+
+        req.getSession().setAttribute(LOGIN, login);
 
         if (isRememberChecked) {
             Cookie loginCookie = new Cookie(LOGIN, login);

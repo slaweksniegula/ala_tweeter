@@ -37,6 +37,7 @@ public class AppUserDao extends AbstractDao implements UserDao {
         return selectByEmailQuery.setParameter("email", email).getSingleResult();
     }
 
+    //clear cashe after this operation
     @Override
     public AppUser getUserByLogin(String login) throws NoResultException {
         TypedQuery<AppUser> selectByLoginQuery = entityManager.createQuery("select u from AppUser u where u.login = :login", AppUser.class);
@@ -45,7 +46,7 @@ public class AppUserDao extends AbstractDao implements UserDao {
 
     @Override
     public HashSet<AppUser> getUsersByName(String name) {
-        TypedQuery<AppUser> selectByNameQuery = entityManager.createQuery("select u from AppUser where u.name = :name", AppUser.class);
+        TypedQuery<AppUser> selectByNameQuery = entityManager.createQuery("select u from AppUser u where u.name = :name", AppUser.class);
         return new HashSet<>(selectByNameQuery.setParameter("name", name).getResultList());
     }
 
@@ -71,7 +72,7 @@ public class AppUserDao extends AbstractDao implements UserDao {
     @Override
     public HashSet<AppUser> getNotFollowedUsers(String login) {
         Query query =
-                entityManager.createQuery("select u from AppUser where u:login != :login");
+                entityManager.createQuery("select u from AppUser u where u.login != :login");
         query.setParameter("login", login);
         List<AppUser> users = query.getResultList();
         users.removeAll(getFollowedUsers(login));
